@@ -38,8 +38,18 @@ async function run() {
     });
 
     //   get method
+    // http//:localhost:3000/schedule?searchParams=text
     app.get('/schedule', async (req, res) => {
-      const cursor = scheduleCollections.find();
+      const { searchParams } = req.query;
+      console.log(searchParams);
+
+      let query = {}
+
+      if (searchParams) {
+        query = { title: { $regex: searchParams, $options: 'i' } }
+      }
+
+      const cursor = scheduleCollections.find(query);
       const result = await cursor.toArray();
       res.send(result);
     })
