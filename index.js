@@ -72,13 +72,14 @@ async function run() {
       const updatedDoc = {
         $set: updateData
       }
-      console.log(id);
+      console.log({id});
       const result = await scheduleCollections.updateOne(query, updatedDoc, options)
       res.send(result)
     })
     // patch here
     app.patch('/schedule/:id', async (req, res) => {
       const id = req.params.id;
+      console.log({ id });
       const query = { _id: new ObjectId(id) };
       const options = { upsert: true }
       const updatedDoc = {
@@ -86,7 +87,6 @@ async function run() {
           isCompleted: true,
         }
       }
-      console.log(id);
       const result = await scheduleCollections.updateOne(query, updatedDoc, options)
       res.send(result)
     })
